@@ -1,29 +1,37 @@
 package base;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import com.akanksha.automation.factory.DriverFactory;
+import com.akanksha.automation.utils.ConfigReader;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
+import listeners.TestListener;
+import org.testng.annotations.Listeners;
 
+@Listeners(TestListener.class)
 public class BaseTest {
 
-    public WebDriver driver;
+    @Getter
+    protected WebDriver driver;
+    public ConfigReader config;
 
     @BeforeMethod
-    public void setup() {
+    public void setup() throws InterruptedException {
 
-        WebDriverManager.chromedriver().setup();
+        config = new ConfigReader();
 
-        driver = new ChromeDriver();
+        driver = DriverFactory.initializeDriver(
+                config.getProperty("browser"));
 
         driver.manage().window().maximize();
 
-        driver.get("https://opensource-demo.orangehrmlive.com/");
+        driver.get(config.getProperty("url"));
+
+        Thread.sleep(5000);
     }
 
     @AfterMethod
     public void tearDown() {
-
         driver.quit();
     }
 }
