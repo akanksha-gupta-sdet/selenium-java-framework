@@ -19,6 +19,11 @@ public class ScreenshotUtil {
 
         String filePath = "screenshots/" + testName + "_" + timestamp + ".png";
 
+        if (driver == null) {
+            throw new RuntimeException(
+                    "Driver is null. Cannot capture screenshot.");
+        }
+
         File sourceFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         File destinationFile = new File(filePath);
 

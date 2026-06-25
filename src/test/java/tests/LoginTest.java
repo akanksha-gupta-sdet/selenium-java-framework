@@ -12,7 +12,6 @@ import retry.RetryAnalyzer;
 public class LoginTest extends BaseTest {
 
 
-    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void verifyLogin() {
 
         try {

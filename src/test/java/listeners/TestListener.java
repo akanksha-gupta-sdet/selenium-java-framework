@@ -5,6 +5,7 @@ import com.akanksha.automation.utils.ExtentManager;
 import com.akanksha.automation.utils.ScreenshotUtil;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -35,24 +36,22 @@ public class TestListener implements ITestListener {
 
         BaseTest baseTest = (BaseTest) result.getInstance();
 
-        String screenshotPath = ScreenshotUtil.captureScreenshot(
-                                baseTest.getDriver(),
-                                result.getMethod().getMethodName());
+        WebDriver driver = baseTest.getDriver();
 
-        try {
+        if (driver != null) {
+            try {
+                String screenshotPath = ScreenshotUtil.captureScreenshot(driver, result.getMethod().getMethodName());
 
-            test.addScreenCaptureFromPath(
-                    screenshotPath);
+                test.addScreenCaptureFromPath(screenshotPath);
+            } catch (Exception e) {
 
-        } catch (Exception e) {
-
-            e.printStackTrace();
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     public void onFinish(ITestContext context) {
-
         extent.flush();
     }
 }
