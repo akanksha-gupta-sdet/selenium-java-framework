@@ -11,8 +11,7 @@ import org.testng.ITestResult;
 
 public class TestListener implements ITestListener {
 
-    private ExtentReports extent =
-            ExtentManager.getInstance();
+    private ExtentReports extent = ExtentManager.getInstance();
 
     private ExtentTest test;
 
@@ -34,13 +33,11 @@ public class TestListener implements ITestListener {
 
         test.fail(result.getThrowable());
 
-        BaseTest baseTest =
-                (BaseTest) result.getInstance();
+        BaseTest baseTest = (BaseTest) result.getInstance();
 
-        String screenshotPath =
-                ScreenshotUtil.captureScreenshot(
-                        baseTest.getDriver(),
-                        result.getMethod().getMethodName());
+        String screenshotPath = ScreenshotUtil.captureScreenshot(
+                                baseTest.getDriver(),
+                                result.getMethod().getMethodName());
 
         try {
 

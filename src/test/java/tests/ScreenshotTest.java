@@ -9,7 +9,7 @@ public class ScreenshotTest extends BaseTest {
     @Test
     public void takeScreenshotTest() {
 
-        String filePath = ScreenshotUtil.captureScreenshot(driver, "HomePage");
+        String filePath = ScreenshotUtil.captureScreenshot(getDriver(), "verifyLogin");
         System.out.println(filePath);
     }
 }

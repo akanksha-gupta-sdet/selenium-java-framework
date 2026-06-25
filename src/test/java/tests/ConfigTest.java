@@ -12,7 +12,9 @@ public class ConfigTest {
         ConfigReader config = new ConfigReader();
         System.out.println(config.getProperty("browser"));
         System.out.println(config.getProperty("url"));
-        Assert.assertNotNull(config.getProperty("browser"),"Browser value is missing");
-        Assert.assertNotNull(config.getProperty("url"),"Url value is missing");
+        Assert.assertNotNull(config.getProperty("browser"), "Browser value is missing");
+        Assert.assertNotNull(config.getProperty("url"), "Url value is missing");
+
+        System.out.println("Config Test Thread : " + Thread.currentThread().getId());
     }
 }

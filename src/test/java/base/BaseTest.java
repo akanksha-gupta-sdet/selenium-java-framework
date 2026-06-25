@@ -11,27 +11,56 @@ import org.testng.annotations.Listeners;
 @Listeners(TestListener.class)
 public class BaseTest {
 
-    @Getter
-    protected WebDriver driver;
+
+
     public ConfigReader config;
 
+//    @BeforeMethod
+//    public void setup() throws InterruptedException {
+//
+//        config = new ConfigReader();
+//
+//        driver = DriverFactory.initializeDriver(
+//                config.getProperty("browser"));
+//
+//        driver.manage().window().maximize();
+//
+//        driver.get(config.getProperty("url"));
+//
+//        Thread.sleep(5000);
+//    }
+
     @BeforeMethod
-    public void setup() throws InterruptedException {
+    public void setup() {
 
-        config = new ConfigReader();
+         config = new ConfigReader();
 
-        driver = DriverFactory.initializeDriver(
-                config.getProperty("browser"));
+        WebDriver webDriver = DriverFactory.initializeDriver(config.getProperty("browser"));
 
-        driver.manage().window().maximize();
+        DriverFactory.setDriver(webDriver);
 
-        driver.get(config.getProperty("url"));
+        DriverFactory.getDriver().get(config.getProperty("url"));
 
-        Thread.sleep(5000);
+        System.out.println("Thread ID : " + Thread.currentThread().getId());
     }
+
+    public WebDriver getDriver() {
+        return DriverFactory.getDriver();
+    }
+
+//    @AfterMethod
+//    public void tearDown() {
+//        driver.quit();
+//    }
 
     @AfterMethod
     public void tearDown() {
-        driver.quit();
+
+        if (DriverFactory.getDriver() != null) {
+
+            DriverFactory.getDriver().quit();
+
+            DriverFactory.unload();
+        }
     }
 }
