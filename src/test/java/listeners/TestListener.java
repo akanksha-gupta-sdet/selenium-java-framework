@@ -14,25 +14,28 @@ public class TestListener implements ITestListener {
 
     private ExtentReports extent = ExtentManager.getInstance();
 
-    private ExtentTest test;
+    private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
     @Override
     public void onTestStart(ITestResult result) {
 
-        test = extent.createTest(
-                result.getMethod().getMethodName());
+        ExtentTest extentTest = extent.createTest(result.getMethod().getMethodName());
+
+        test.set(extentTest);
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
 
-        test.pass("Test Passed");
+        test.get().pass("Test Passed");
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
 
-        test.fail(result.getThrowable());
+        if (test.get() != null) {
+            test.get().fail(result.getThrowable());
+        }
 
         BaseTest baseTest = (BaseTest) result.getInstance();
 
@@ -42,7 +45,11 @@ public class TestListener implements ITestListener {
             try {
                 String screenshotPath = ScreenshotUtil.captureScreenshot(driver, result.getMethod().getMethodName());
 
-                test.addScreenCaptureFromPath(screenshotPath);
+                if (test.get() != null) {
+                    test.get().addScreenCaptureFromPath(screenshotPath);
+                } else if (test.get() == null) {
+                    System.out.println("ExtentTest object is null for : " + result.getMethod().getMethodName());
+                }
             } catch (Exception e) {
 
                 e.printStackTrace();
