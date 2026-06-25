@@ -11,6 +11,10 @@ public class ExcelUtils {
         try {
             InputStream inputStream = ExcelUtils.class.getClassLoader().getResourceAsStream(fileName);
 
+            if (inputStream == null) {
+                throw new RuntimeException("Excel file not found: " + fileName);
+            }
+
             Workbook workbook = new XSSFWorkbook(inputStream);
 
             Sheet sheet = workbook.getSheet(sheetName);

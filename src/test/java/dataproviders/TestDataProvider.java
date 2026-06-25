@@ -7,6 +7,6 @@ public class TestDataProvider {
 
     @DataProvider(name = "loginData")
     public static Object[][] loginData() {
-        return ExcelUtils.getTestData("LoginData.xlsx", "LoginData");
+        return ExcelUtils.getTestData("testdata/LoginData.xlsx", "LoginData");
     }
 }
