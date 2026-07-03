@@ -1,20 +1,67 @@
-# selenium-java-framework
-Automation Testing Framework built using Java, Selenium WebDriver, TestNG, Maven, Page Object Model (POM), Extent Reports, and CI/CD integration.
+# Selenium Java Automation Framework
 
-Implemented reusable Explicit Wait utility using WebDriverWait
-and ExpectedConditions to improve test stability.
+## Features
 
-Implemented Screenshot Utility for capturing execution evidence
-and debugging test failures.
+✔ Selenium 4
+✔ Java 17
+✔ TestNG
+✔ Rest Assured
+✔ Page Object Model
+✔ ThreadLocal Driver
+✔ Parallel Execution
+✔ Retry Analyzer
+✔ Extent Reports
+✔ JSON Schema Validation
+✔ GitHub Actions CI/CD
 
-Designed TestNG Listener framework for centralized test execution tracking.
+## Tech Stack
 
-Integrated Extent Reports with automatic screenshot capture on failure.
+Java
+Selenium
+TestNG
+Rest Assured
+Maven
+GitHub Actions
+Log4j2
 
-Implemented reusable reporting solution for execution analysis and debugging.
+## Project Structure
 
-• Implemented parallel test execution using TestNG.
+src
+├── main
+│   └── java
+│       └── com.akanksha.automation
+│           ├── api
+│           ├── factory
+│           ├── pages
+│           └── utils
+│
+└── test
+│     └──java
+│           ├── base
+│           ├── listeners
+│           ├── reporting
+│           └── tests
+│
+└── resources
+└── log4j2.xml
 
-• Designed ThreadLocal WebDriver management to support thread-safe browser execution.
+## How to Execute
 
-• Reduced execution time by enabling concurrent test runs.
+mvn clean test
+
+## Execute API Suite
+
+mvn test -DsuiteXmlFile=api-testng.xml
+
+## Execute Complete Framework
+
+master-testng.xml
+
+## Sample Report
+
+--To Do
+(Extent Report screenshot)
+
+## CI/CD
+--To Do
+(GitHub Actions badge)

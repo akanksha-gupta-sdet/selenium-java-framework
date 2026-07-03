@@ -6,12 +6,11 @@ import dataproviders.TestDataProvider;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import com.akanksha.automation.pages.LoginPage;
-import retry.RetryAnalyzer;
 
 
 public class LoginTest extends BaseTest {
 
-
+    @Test
     public void verifyLogin() {
 
         try {

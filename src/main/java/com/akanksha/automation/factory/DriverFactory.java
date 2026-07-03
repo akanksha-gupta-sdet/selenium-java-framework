@@ -28,8 +28,7 @@ public class DriverFactory {
             case "chrome":
                 WebDriverManager.chromedriver().setup();
 
-                ChromeOptions options =
-                        new ChromeOptions();
+                ChromeOptions options = new ChromeOptions();
 
                 options.addArguments("--headless=new");
                 options.addArguments("--no-sandbox");
@@ -50,8 +49,7 @@ public class DriverFactory {
                 break;
 
             default:
-                throw new RuntimeException(
-                        "Browser not supported: " + browser);
+                throw new RuntimeException("Browser not supported: " + browser);
         }
 
         driver.manage().window().maximize();

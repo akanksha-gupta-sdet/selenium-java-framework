@@ -16,12 +16,18 @@ public class TestListener implements ITestListener {
 
     private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
+    public static ExtentTest getTest() {
+        return test.get();
+    }
+
     @Override
     public void onTestStart(ITestResult result) {
 
-        ExtentTest extentTest = extent.createTest(result.getMethod().getMethodName());
+        String testName = result.getTestClass().getRealClass().getSimpleName() + " :: " + result.getMethod().getMethodName();
 
+        ExtentTest extentTest = extent.createTest(testName);
         test.set(extentTest);
+
     }
 
     @Override
@@ -37,22 +43,24 @@ public class TestListener implements ITestListener {
             test.get().fail(result.getThrowable());
         }
 
-        BaseTest baseTest = (BaseTest) result.getInstance();
+        if (result.getInstance() instanceof BaseTest) {
 
-        WebDriver driver = baseTest.getDriver();
+            BaseTest baseTest = (BaseTest) result.getInstance();
 
-        if (driver != null) {
-            try {
-                String screenshotPath = ScreenshotUtil.captureScreenshot(driver, result.getMethod().getMethodName());
+            WebDriver driver = baseTest.getDriver();
 
-                if (test.get() != null) {
+            if (driver != null) {
+
+                try {
+
+                    String screenshotPath = ScreenshotUtil.captureScreenshot(driver, result.getMethod().getMethodName());
+
                     test.get().addScreenCaptureFromPath(screenshotPath);
-                } else if (test.get() == null) {
-                    System.out.println("ExtentTest object is null for : " + result.getMethod().getMethodName());
-                }
-            } catch (Exception e) {
 
-                e.printStackTrace();
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
             }
         }
     }
